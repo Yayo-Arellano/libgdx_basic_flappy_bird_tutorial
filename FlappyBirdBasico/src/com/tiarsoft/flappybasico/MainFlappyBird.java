@@ -8,7 +8,6 @@ public class MainFlappyBird extends Game {
 	@Override
 	public void create() {
 		Assets.load();
-
 		setScreen(new GameScreen(this));
 	}
 }

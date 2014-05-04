@@ -24,15 +24,15 @@ import com.tiarsoft.flappybasico.objetos.Tuberia;
 import com.tiarsoft.flappybasico.screens.Screens;
 
 public class WorldGame {
-	final float WIDTH = Screens.WORLD_SCREEN_WIDTH;
-	final float HEIGHT = Screens.WORLD_SCREEN_HEIGHT;
+	final float WIDTH = Screens.WORLD_WIDTH;
+	final float HEIGHT = Screens.WORLD_HEIGHT;
 
 	static final int STATE_RUNNING = 0;
 	static final int STATE_GAMEOVER = 1;
 	public int state;
 
 	/**
-	 * Tiempo entre una tuberia y otra, si se incrementa el espacio entre tuberias incrementa.
+	 * Tiempo en segundos entre una tuberia y otra, si se incrementa, el espacio entre tuberias incrementa.
 	 */
 	final float TIME_TO_SPAWN_PIPE = 1.5f;
 	float timeToSpawnPipe;
@@ -88,8 +88,6 @@ public class WorldGame {
 		FixtureDef fixture = new FixtureDef();
 		fixture.shape = shape;
 		fixture.density = 8;
-		fixture.restitution = 0;
-		fixture.friction = 0;
 		oBody.createFixture(fixture);
 
 		oBody.setFixedRotation(true);
@@ -97,7 +95,6 @@ public class WorldGame {
 		oBody.setBullet(true);
 
 		shape.dispose();
-
 	}
 
 	private void createTecho() {
@@ -115,7 +112,6 @@ public class WorldGame {
 
 		oBody.createFixture(fixture);
 		shape.dispose();
-
 	}
 
 	private void createPiso() {
@@ -133,9 +129,7 @@ public class WorldGame {
 		fixture.shape = shape;
 
 		oBody.createFixture(fixture);
-
 		shape.dispose();
-
 	}
 
 	public void agregarTuberias() {
@@ -171,16 +165,13 @@ public class WorldGame {
 		bd.position.y = y;
 		bd.type = BodyType.KinematicBody;
 		Body oBody = oWorldBox.createBody(bd);
-		oBody.setLinearVelocity(-2, 0);
+		oBody.setLinearVelocity(Tuberia.VELOCIDAD_X, 0);
 
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(Tuberia.WIDTH / 2f, Tuberia.HEIGHT / 2f);
 
 		FixtureDef fixture = new FixtureDef();
 		fixture.shape = shape;
-		fixture.density = 0f;
-		fixture.restitution = 0;
-		fixture.friction = 0;
 
 		oBody.createFixture(fixture);
 		oBody.setFixedRotation(true);
@@ -197,16 +188,13 @@ public class WorldGame {
 		bd.position.y = y;
 		bd.type = BodyType.KinematicBody;
 		Body oBody = oWorldBox.createBody(bd);
-		oBody.setLinearVelocity(-2, 0);
+		oBody.setLinearVelocity(Contador.VELOCIDAD_X, 0);
 
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(Contador.WIDTH / 2f, Contador.HEIGHT / 2f);
 
 		FixtureDef fixture = new FixtureDef();
 		fixture.shape = shape;
-		fixture.density = 0f;
-		fixture.restitution = 0;
-		fixture.friction = 0;
 		fixture.isSensor = true;
 
 		oBody.createFixture(fixture);
@@ -217,7 +205,7 @@ public class WorldGame {
 	}
 
 	public void update(float delta, boolean jump) {
-		oWorldBox.step(delta, 8, 4); // para hacer mas lento el juego 1/300f
+		oWorldBox.step(delta, 8, 4);
 
 		eliminarObjetos();
 
@@ -256,21 +244,17 @@ public class WorldGame {
 		if (jump && oBird.state == Bird.STATE_NORMAL) {
 			body.setLinearVelocity(0, Bird.VELOCIDAD_JUMP);
 		}
-		else
-			body.setLinearVelocity(0, body.getLinearVelocity().y);
 
 	}
 
 	private void updateTuberias(Body body, float delta) {
 		if (oBird.state == Bird.STATE_NORMAL) {
 			Tuberia obj = (Tuberia) body.getUserData();
-			if (obj != null) {
 
-				obj.update(delta, body);
-				if (obj.position.y <= -5)
-					obj.state = Tuberia.STATE_DESTRUIR;
+			obj.update(delta, body);
+			if (obj.position.x <= -5)
+				obj.state = Tuberia.STATE_DESTRUIR;
 
-			}
 		}
 		else
 			body.setLinearVelocity(0, 0);
@@ -358,13 +342,11 @@ public class WorldGame {
 
 		@Override
 		public void preSolve(Contact contact, Manifold oldManifold) {
-			// TODO Auto-generated method stub
-
+			
 		}
 
 		@Override
 		public void postSolve(Contact contact, ContactImpulse impulse) {
-			// TODO Auto-generated method stub
 
 		}
 

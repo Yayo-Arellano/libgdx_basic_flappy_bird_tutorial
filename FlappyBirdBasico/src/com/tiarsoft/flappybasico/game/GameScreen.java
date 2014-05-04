@@ -20,6 +20,7 @@ public class GameScreen extends Screens {
 
 	public GameScreen(MainFlappyBird game) {
 		super(game);
+		state = STATE_READY;
 
 		oWorld = new WorldGame();
 		renderer = new WorldGameRenderer(batcher, oWorld);
@@ -29,6 +30,9 @@ public class GameScreen extends Screens {
 
 		tap = new Image(Assets.tap);
 		tap.setPosition(SCREEN_WIDTH / 2f - tap.getWidth() / 2f, 310);
+
+		gameOver = new Image(Assets.gameOver);
+		gameOver.setPosition(SCREEN_WIDTH / 2f - getReady.getWidth() / 2f, 350);
 
 		stage.addActor(getReady);
 		stage.addActor(tap);
@@ -69,21 +73,16 @@ public class GameScreen extends Screens {
 	}
 
 	private void updateRunning(float delta) {
-
-		boolean salto = false;
+		boolean jump = false;
 		if (Gdx.input.justTouched())
-			salto = true;
+			jump = true;
 
-		oWorld.update(delta, salto);
+		oWorld.update(delta, jump);
 
 		if (oWorld.state == WorldGame.STATE_GAMEOVER) {
 			state = STATE_GAME_OVER;
-			gameOver = new Image(Assets.gameOver);
-			gameOver.setPosition(SCREEN_WIDTH / 2f - getReady.getWidth() / 2f,
-					350);
 			stage.addActor(gameOver);
 		}
-
 	}
 
 	private void updateGameOver(float delta) {
@@ -94,18 +93,13 @@ public class GameScreen extends Screens {
 						public void run() {
 							gameOver.remove();
 							game.setScreen(new GameScreen(game));
-
 						}
 					})));
 		}
-
 	}
 
 	@Override
 	public void draw(float delta) {
-		oCam.update();
-		batcher.setProjectionMatrix(oCam.combined);
-
 		renderer.render(delta);
 
 		oCam.update();

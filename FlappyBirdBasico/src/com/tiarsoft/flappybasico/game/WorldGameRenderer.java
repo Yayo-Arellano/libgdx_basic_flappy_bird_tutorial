@@ -13,19 +13,19 @@ import com.tiarsoft.flappybasico.screens.Screens;
 
 public class WorldGameRenderer {
 
-	final float WIDTH = Screens.WORLD_SCREEN_WIDTH;
-	final float HEIGHT = Screens.WORLD_SCREEN_HEIGHT;
+	final float WIDTH = Screens.WORLD_WIDTH;
+	final float HEIGHT = Screens.WORLD_HEIGHT;
 
 	SpriteBatch batcher;
 	WorldGame oWorld;
-	OrthographicCamera OrthoCam;
+	OrthographicCamera oCam;
 
 	Box2DDebugRenderer renderBox;
 
 	public WorldGameRenderer(SpriteBatch batcher, WorldGame oWorld) {
 
-		this.OrthoCam = new OrthographicCamera(WIDTH, HEIGHT);
-		this.OrthoCam.position.set(WIDTH / 2f, HEIGHT / 2f, 0);
+		this.oCam = new OrthographicCamera(WIDTH, HEIGHT);
+		this.oCam.position.set(WIDTH / 2f, HEIGHT / 2f, 0);
 		this.batcher = batcher;
 		this.oWorld = oWorld;
 		this.renderBox = new Box2DDebugRenderer();
@@ -33,8 +33,8 @@ public class WorldGameRenderer {
 
 	public void render(float delta) {
 
-		OrthoCam.update();
-		batcher.setProjectionMatrix(OrthoCam.combined);
+		oCam.update();
+		batcher.setProjectionMatrix(oCam.combined);
 
 		batcher.begin();
 		batcher.disableBlending();
@@ -45,7 +45,7 @@ public class WorldGameRenderer {
 
 		batcher.end();
 
-		renderBox.render(oWorld.oWorldBox, OrthoCam.combined);
+		renderBox.render(oWorld.oWorldBox, oCam.combined);
 	}
 
 	private void drawBackGround(float delta) {

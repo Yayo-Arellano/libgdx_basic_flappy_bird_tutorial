@@ -4,9 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 public class Tuberia {
-	public static int TIPO_ARRIBA = 0;
-	public static int TIPO_ABAJO = 1;
-	public int tipo;
+	public static int TIPO_ARRIBA = 0;// Indica si es una tuberia de la parte superior
+	public static int TIPO_ABAJO = 1;// Indica si es una tuberia de la parte inferior
+	public int tipo;// Guarda el tipo de tuberia (Superior o inferior).
 
 	public static float WIDTH = .85f;
 	public static float HEIGHT = 4f;
