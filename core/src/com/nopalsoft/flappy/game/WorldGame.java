@@ -148,9 +148,9 @@ public class WorldGame {
     private void addPipe(float x, float y, boolean isTopPipe) {
         Pipe obj;
         if (isTopPipe)
-            obj = new Pipe(x, y, Pipe.TIPO_ARRIBA);
+            obj = new Pipe(x, y, Pipe.TYPE_UP);
         else
-            obj = new Pipe(x, y, Pipe.TIPO_ABAJO);
+            obj = new Pipe(x, y, Pipe.TYPE_DOWN);
 
         BodyDef bd = new BodyDef();
         bd.position.x = x;
@@ -220,7 +220,7 @@ public class WorldGame {
             }
         }
 
-        if (oBird.state == Bird.STATE_MUERTO)
+        if (oBird.state == Bird.STATE_DEAD)
             state = STATE_GAME_OVER;
     }
 
@@ -229,7 +229,7 @@ public class WorldGame {
         oBird.update(delta, body);
 
         if (jump && oBird.state == Bird.STATE_NORMAL) {
-            body.setLinearVelocity(0, Bird.VELOCIDAD_JUMP);
+            body.setLinearVelocity(0, Bird.JUMP_SPEED);
         }
 
     }
@@ -240,7 +240,7 @@ public class WorldGame {
 
             obj.update(delta, body);
             if (obj.position.x <= -5)
-                obj.state = Pipe.STATE_DESTRUIR;
+                obj.state = Pipe.STATE_REMOVE;
 
         } else
             body.setLinearVelocity(0, 0);
@@ -266,16 +266,14 @@ public class WorldGame {
 
                 if (body.getUserData() instanceof Pipe) {
                     Pipe obj = (Pipe) body.getUserData();
-                    if (obj.state == Pipe.STATE_DESTRUIR) {
+                    if (obj.state == Pipe.STATE_REMOVE) {
                         arrPipes.removeValue(obj, true);
                         oWorldBox.destroyBody(body);
-                        continue;
                     }
                 } else if (body.getUserData() instanceof Counter) {
                     Counter obj = (Counter) body.getUserData();
                     if (obj.state == Counter.STATE_DESTROY) {
                         oWorldBox.destroyBody(body);
-                        continue;
                     }
                 }
             }
@@ -308,7 +306,7 @@ public class WorldGame {
                 }
             } else {
                 if (oBird.state == Bird.STATE_NORMAL) {
-                    oBird.getHurt();
+                    oBird.hurt();
 
                 }
             }

@@ -11,45 +11,36 @@ public class Assets {
 
     public static Animation<AtlasRegion> bird;
 
-    public static TextureRegion fondo;
+    public static TextureRegion background;
     public static TextureRegion gameOver;
     public static TextureRegion getReady;
     public static TextureRegion tap;
-    public static TextureRegion tuberiaDown;
-    public static TextureRegion tuberiaUp;
+    public static TextureRegion downPipe;
+    public static TextureRegion upPipe;
 
     public static void load() {
+        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/atlasMap.txt"));
 
-        /**
-         * Creamos un objeto TextureAtlas a partir del texture atlas generado por el TexturePacker.
-         */
-        TextureAtlas atlas = new TextureAtlas(
-                Gdx.files.internal("data/atlasMap.txt"));
-
-        /**
-         * Creamos cada una de las regiones, buscando por el nombre de la imagen en nuestro texture atlas.
-         */
-        fondo = atlas.findRegion("fondo");
+        background = atlas.findRegion("fondo");
         gameOver = atlas.findRegion("gameOver");
         getReady = atlas.findRegion("getReady");
         tap = atlas.findRegion("tap");
-        tuberiaDown = atlas.findRegion("tuberiaDown");
-        tuberiaUp = atlas.findRegion("tuberiaUp");
+        downPipe = atlas.findRegion("tuberiaDown");
+        upPipe = atlas.findRegion("tuberiaUp");
 
-        /**
-         * Creamos la animacion del pajaro con una duracion de .3 segundos
-         */
-        bird = new Animation<>(.3f, atlas.findRegion("bird1"),
-                atlas.findRegion("bird2"), atlas.findRegion("bird3"));
+        bird = new Animation<>(.3f,
+                atlas.findRegion("bird1"),
+                atlas.findRegion("bird2"),
+                atlas.findRegion("bird3"));
 
-        /**
-         * Creamos el bitmap font por default e incrementamos su tamano
-         */
+        // Use default libGDX font
         font = new BitmapFont();
         font.getData().scale(7f);
-//		font.setScale(7f);
     }
 
+    /**
+     * Get the text width in order to center in the screen
+     */
     public static float getTextWidth(String text) {
         glyphLayout.setText(font, text);
         return glyphLayout.width;

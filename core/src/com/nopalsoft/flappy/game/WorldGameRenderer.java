@@ -49,7 +49,7 @@ public class WorldGameRenderer {
     }
 
     private void drawBackGround(float delta) {
-        batcher.draw(Assets.fondo, 0, 0, WIDTH, HEIGHT);
+        batcher.draw(Assets.background, 0, 0, WIDTH, HEIGHT);
 
     }
 
@@ -58,11 +58,11 @@ public class WorldGameRenderer {
 
         while (i.hasNext()) {
             Pipe obj = i.next();
-            if (obj.tipo == Pipe.TIPO_ABAJO)
-                batcher.draw(Assets.tuberiaDown, obj.position.x - .5f,
+            if (obj.type == Pipe.TYPE_DOWN)
+                batcher.draw(Assets.downPipe, obj.position.x - .5f,
                         obj.position.y - 2f, 1f, 4);
             else
-                batcher.draw(Assets.tuberiaUp, obj.position.x - .5f,
+                batcher.draw(Assets.upPipe, obj.position.x - .5f,
                         obj.position.y - 2f, 1f, 4);
         }
 

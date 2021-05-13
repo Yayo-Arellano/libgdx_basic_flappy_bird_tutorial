@@ -23,7 +23,7 @@ public class GameScreen extends Screens {
         state = STATE_READY;
 
         oWorld = new WorldGame();
-        renderer = new WorldGameRenderer(batcher, oWorld);
+        renderer = new WorldGameRenderer(spriteBatch, oWorld);
 
         getReady = new Image(Assets.getReady);
         getReady.setPosition(SCREEN_WIDTH / 2f - getReady.getWidth() / 2f, 600);
@@ -100,12 +100,12 @@ public class GameScreen extends Screens {
         renderer.render(delta);
 
         oCam.update();
-        batcher.setProjectionMatrix(oCam.combined);
+        spriteBatch.setProjectionMatrix(oCam.combined);
 
 
-        batcher.begin();
+        spriteBatch.begin();
         float width = Assets.getTextWidth(oWorld.score + "");
-        Assets.font.draw(batcher, oWorld.score + "", SCREEN_WIDTH / 2f - width / 2f, 700);
-        batcher.end();
+        Assets.font.draw(spriteBatch, oWorld.score + "", SCREEN_WIDTH / 2f - width / 2f, 700);
+        spriteBatch.end();
     }
 }
