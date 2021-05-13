@@ -8,7 +8,7 @@ public class Counter {
     public static float HEIGHT = 1.85f;
 
     public static int STATE_NORMAL = 0;
-    public static int STATE_DESTROY = 1;
+    public static int STATE_REMOVE = 1;
 
     public int state; // Save the current state.
 

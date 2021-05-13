@@ -214,7 +214,7 @@ public class WorldGame {
             if (body.getUserData() instanceof Bird) {
                 updateBird(body, delta, jump);
             } else if (body.getUserData() instanceof Pipe) {
-                updatePipes(body, delta);
+                updatePipes(body);
             } else if (body.getUserData() instanceof Counter) {
                 updateCounter(body);
             }
@@ -234,11 +234,11 @@ public class WorldGame {
 
     }
 
-    private void updatePipes(Body body, float delta) {
+    private void updatePipes(Body body) {
         if (oBird.state == Bird.STATE_NORMAL) {
             Pipe obj = (Pipe) body.getUserData();
 
-            obj.update(delta, body);
+            obj.update(body);
             if (obj.position.x <= -5)
                 obj.state = Pipe.STATE_REMOVE;
 
@@ -253,7 +253,7 @@ public class WorldGame {
 
             obj.update(body);
             if (obj.position.x <= -5)
-                obj.state = Counter.STATE_DESTROY;
+                obj.state = Counter.STATE_REMOVE;
         } else
             body.setLinearVelocity(0, 0);
     }
@@ -272,7 +272,7 @@ public class WorldGame {
                     }
                 } else if (body.getUserData() instanceof Counter) {
                     Counter obj = (Counter) body.getUserData();
-                    if (obj.state == Counter.STATE_DESTROY) {
+                    if (obj.state == Counter.STATE_REMOVE) {
                         oWorldBox.destroyBody(body);
                     }
                 }
@@ -300,7 +300,7 @@ public class WorldGame {
             if (somethingElse instanceof Counter) {
                 Counter obj = (Counter) somethingElse;
                 if (obj.state == Counter.STATE_NORMAL) {
-                    obj.state = Counter.STATE_DESTROY;
+                    obj.state = Counter.STATE_REMOVE;
                     score++;
 
                 }

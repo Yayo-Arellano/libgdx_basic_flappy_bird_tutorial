@@ -21,19 +21,16 @@ public class Pipe {
     public static float SPEED_X = -2f;
 
     public Vector2 position;
-    public float stateTime;
 
     public Pipe(float x, float y, int type) {
         position = new Vector2(x, y);
-        stateTime = 0;
         state = STATE_NORMAL;
         this.type = type;
     }
 
-    public void update(float delta, Body body) {
+    public void update(Body body) {
         position.x = body.getPosition().x;
         position.y = body.getPosition().y;
-        stateTime += delta;
     }
 
 }
