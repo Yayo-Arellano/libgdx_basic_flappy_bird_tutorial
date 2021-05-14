@@ -16,7 +16,7 @@ public class WorldGameRenderer {
     final float WIDTH = Screens.WORLD_WIDTH;
     final float HEIGHT = Screens.WORLD_HEIGHT;
 
-    SpriteBatch batcher;
+    SpriteBatch spriteBatch;
     WorldGame oWorld;
     OrthographicCamera oCam;
 
@@ -26,7 +26,7 @@ public class WorldGameRenderer {
 
         this.oCam = new OrthographicCamera(WIDTH, HEIGHT);
         this.oCam.position.set(WIDTH / 2f, HEIGHT / 2f, 0);
-        this.batcher = batcher;
+        this.spriteBatch = batcher;
         this.oWorld = oWorld;
         this.renderBox = new Box2DDebugRenderer();
     }
@@ -34,38 +34,33 @@ public class WorldGameRenderer {
     public void render(float delta) {
 
         oCam.update();
-        batcher.setProjectionMatrix(oCam.combined);
+        spriteBatch.setProjectionMatrix(oCam.combined);
 
-        batcher.begin();
-        batcher.disableBlending();
-        drawBackGround(delta);
-        batcher.enableBlending();
-        drawTuberia(delta);
+        spriteBatch.begin();
+        spriteBatch.disableBlending();
+        drawBackground(delta);
+        spriteBatch.enableBlending();
+        drawPipe(delta);
         drawBird(delta);
 
-        batcher.end();
+        spriteBatch.end();
 
         renderBox.render(oWorld.oWorldBox, oCam.combined);
     }
 
-    private void drawBackGround(float delta) {
-        batcher.draw(Assets.background, 0, 0, WIDTH, HEIGHT);
-
+    private void drawBackground(float delta) {
+        spriteBatch.draw(Assets.background, 0, 0, WIDTH, HEIGHT);
     }
 
-    private void drawTuberia(float delta) {
-        Iterator<Pipe> i = oWorld.arrPipes.iterator();
-
-        while (i.hasNext()) {
-            Pipe obj = i.next();
+    private void drawPipe(float delta) {
+        for (Pipe obj : oWorld.arrPipes) {
             if (obj.type == Pipe.TYPE_DOWN)
-                batcher.draw(Assets.downPipe, obj.position.x - .5f,
+                spriteBatch.draw(Assets.downPipe, obj.position.x - .5f,
                         obj.position.y - 2f, 1f, 4);
             else
-                batcher.draw(Assets.upPipe, obj.position.x - .5f,
+                spriteBatch.draw(Assets.upPipe, obj.position.x - .5f,
                         obj.position.y - 2f, 1f, 4);
         }
-
     }
 
     private void drawBird(float delta) {
@@ -77,7 +72,7 @@ public class WorldGameRenderer {
         } else {
             keyFrame = Assets.bird.getKeyFrame(obj.stateTime, false);
         }
-        batcher.draw(keyFrame, obj.position.x - .3f, obj.position.y - .25f, .6f, .5f);
+        spriteBatch.draw(keyFrame, obj.position.x - .3f, obj.position.y - .25f, .6f, .5f);
     }
 
 }

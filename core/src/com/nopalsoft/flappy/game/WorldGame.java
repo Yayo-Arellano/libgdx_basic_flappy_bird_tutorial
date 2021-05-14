@@ -288,13 +288,13 @@ public class WorldGame {
             Fixture b = contact.getFixtureB();
 
             if (a.getBody().getUserData() instanceof Bird)
-                beginContactBirdWithSomethingElse(a, b);
+                beginContactBird(a, b);
             else if (b.getBody().getUserData() instanceof Bird)
-                beginContactBirdWithSomethingElse(b, a);
+                beginContactBird(b, a);
 
         }
 
-        private void beginContactBirdWithSomethingElse(Fixture bird, Fixture otraCosa) {
+        private void beginContactBird(Fixture bird, Fixture otraCosa) {
             Object somethingElse = otraCosa.getBody().getUserData();
 
             if (somethingElse instanceof Counter) {
