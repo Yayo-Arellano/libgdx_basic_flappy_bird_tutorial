@@ -45,7 +45,7 @@ public class WorldGameRenderer {
 
         spriteBatch.end();
 
-        renderBox.render(oWorld.oWorldBox, oCam.combined);
+//        renderBox.render(oWorld.oWorldBox, oCam.combined);
     }
 
     private void drawBackground(float delta) {
